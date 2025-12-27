@@ -9,39 +9,47 @@ let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 
-function getRandomCard(){
-    let randomCard = Math.floor(Math.random() * 13) + 1
-    return randomCard
+
+function getRandomCard() {
+    // if 1     -> return 11
+    // if 11-13 -> return 10
+    let randomCard = Math.floor( Math.random()*13 ) + 1
+    if (randomCard > 10) {
+        return 10
+    } else if (randomCard === 1) {
+        return 11
+    } else {
+        return randomCard
+    }
 }
-function startGame(){
+
+function startGame() {
     renderGame()
 }
 
 function renderGame() {
-        cardsEl.textContent = "Cards: "
-    // Create a for loop that renders out all the cards instead of just two
+    cardsEl.textContent = "Cards: "
     for (let i = 0; i < cards.length; i++) {
         cardsEl.textContent += cards[i] + " "
     }
+    
     sumEl.textContent = "Sum: " + sum
     if (sum <= 20) {
-        messageEl.textContent = "Do you want to draw a new card?"
+        message = "Do you want to draw a new card?"
     } else if (sum === 21) {
-        messageEl.textContent = "You've got Blackjack!"
+        message = "You've got Blackjack!"
         hasBlackJack = true
     } else {
-        messageEl.textContent = "You're out of the game!"
+        message = "You're out of the game!"
         isAlive = false
     }
-     
+    messageEl.textContent = message
 }
+
 
 function newCard() {
-    messageEl.textContent = "Drawing a new card from the deck!"
-    let newCard = getRandomCard()
-    sum += newCard
-    cards.push(newCard)
+    let card = getRandomCard()
+    sum += card
+    cards.push(card)
     renderGame()
 }
-
-
